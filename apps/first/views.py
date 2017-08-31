@@ -8,12 +8,17 @@ from .models import Trip
 from ..login.models import User
 # Create your views here.
 gmaps = googlemaps.Client(key="AIzaSyCE5rc8HduPNe5ZN5B6yLPQYMPmZ1jYTcw")
+gkey = "AIzaSyCE5rc8HduPNe5ZN5B6yLPQYMPmZ1jYTcw"
 
 def index(request):
     # Trip.objects.all().delete()
-    saved_routes = Trip.objects.filter(creator__id=request.session['id'])
-    context = {'saved_routes':saved_routes}
-    return render(request, 'first/index.html', context)
+    if not 'id' in request.session:
+        request.session.id = 0
+        return render(request, 'first/index.html')
+    else:
+        saved_routes = Trip.objects.filter(creator__id=request.session['id'])
+        context = {'saved_routes':saved_routes}
+        return render(request, 'first/index.html', context)
 
 def process(request):
     if 'route_choice' in request.POST:
@@ -81,7 +86,8 @@ def process(request):
             'net_cost':net_cost,
             'status':status,
             'min_per':min_per,
-            'actual_per':actual_per
+            'actual_per':actual_per,
+            'gkey': gkey
             }
     # print toll_direction_results[0]['legs'][0]['steps']
     if 'save_route' in request.POST:

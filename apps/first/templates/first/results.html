@@ -5,38 +5,62 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Results</title>
-             {% load staticfiles %}
+    {% load staticfiles %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type = "text/css" href="{% static 'first/css/style.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'first/css/style.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
+
 <body>
     <div class="container-fluid">
-        <header>
-            <h1>Toll Route Calculator</h1>
-        </header>
-        <h1>Traveling from {{start}} to {{end}}:</h1>
-        <p id="back"><a href="{% url 'routes:index' %}">Back to enter route</a></p>
-        <div class="container-fluid">
-            <h2><strong> With Tolls:</strong></h2>
-            <h4>Using these toll routes:</h4>
-            {% for route in toll_routes %}
-            <h5>{{route}}</h5>
-            {% endfor %}
-            <h3>Taking {{tsummary}} it will take {{tduration}} traveling {{tdistance}}</h3>
+        <div class="row">
+            <header>
+                <h1><strong>Toll Route Calculator</strong></h1>
+                <a href="{% url 'routes:index' %}">Back to routes</a>
+            </header>
         </div>
-        <div class="container-fluid">
-            <h2><strong>Without Tolls</strong></h2>
-        <h3>Taking {{summary}} it will take {{duration}} traveling {{distance}}</h3>
+        <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-11">
+                <h1>Traveling from {{start}} to {{end}}:</h1>
+            </div>
         </div>
-        <div class="container-fluid">
-            <h2><strong>Summary:</strong></h2>
-            <h3>Paying the toll will save <strong>{{time_diff}}</strong> minutes while traveling <strong>{{distance_diff}}</strong> miles shorter</h3>
-            <h3>The cost of the toll will be <strong>${{toll}}</strong> and you will save <strong>${{gas_saving}}</strong> in gas for a net cost of <strong>${{net_cost}}</strong></h3>
-            <h3> Based on the costs given you <strong>{{status}}</strong> take the toll route</h3>
-            <h4>Minutes needed to save per $1: <mark>{{min_per}}</mark></h4>
-            <h4>Toll route minutes saved per $1: <mark>{{actual_per}}</mark></h4>
-            <br><a href="{% url 'routes:index' %}">Back</a> 
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+                <div class="row">
+                    <h2><strong>Summary:</strong> You <strong>{{status}}</strong> take the toll route</h2>
+                </div>
+                <div class="row">
+                    <h5>Toll Cost: ${{toll}}</h5>
+                    <h5>Time savings: {{time_diff}}</h5>
+                    <h5>Distance Savings: {{distance_diff}} miles</h5>
+                    <h5>Gas Savings: {{gas_saving}} gallons</h5>
+                    <h5>Net Cost: ${{net_cost}}</h5>
+                    <h5>Minutes saved per $1: {{actual_per}}</h5>
+                </div>
+            </div>
         </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-4 result">
+                <h2><strong> With Tolls:</strong></h2>
+                <h3>Taking {{tsummary}} it will take {{tduration}} traveling {{tdistance}}</h3>
+                <iframe width="450" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5rc8HduPNe5ZN5B6yLPQYMPmZ1jYTcw
+                &origin={{start}}&destination={{end}}" allowfullscreen>
+                </iframe>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-4 result">
+                <h2><strong>Without Tolls</strong></h2>
+                <h3>Taking {{summary}} it will take {{duration}} traveling {{distance}}</h3>
+                <iframe width="450" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5rc8HduPNe5ZN5B6yLPQYMPmZ1jYTcw
+            &origin={{start}}&destination={{end}}&avoid=tolls" allowfullscreen>
+                </iframe>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <br><a href="{% url 'routes:index' %}">Back</a>
     </div>
 </body>

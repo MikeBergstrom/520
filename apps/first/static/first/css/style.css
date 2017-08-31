@@ -8,3 +8,10 @@ header{
 body{
     background-color: lightgray;
 }
+#routeForm{
+    width:500px;
+}
+.result{
+    border: 1px solid black;
+    border-radius: 25px;
+}
