@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Toll Calculations</title>
+             {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type = "text/css" href="{% static 'first/css/style.css' %}"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+    <header>
+        <h1>Toll Route Calculator</h1>
+    </header>
+    <form id="saved_routes" action="process" method="post">
+         {% csrf_token %}
+    <div class="form-group">
+    <label>Saved Routes:</label>
+        <select name="route_choice">
+            {% for route in saved_routes %}
+            <option value="{{route.name}}">{{route.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+        <input type="submit" value="Calculate Route">
+    </form>
+    <br>
+    <br>
+    <form action="process" method="post">
+         {% csrf_token %}
+        <div class="form-group">
+            <label>Starting location:</label>
+            <input type="text" name="start" value="{{request.session.start}}">
+        </div>
+        <div class="form-group">
+            <label>Ending location:</label>
+            <input type="text" name="end" value="{{request.session.end}}"><br>
+        </div>
+        <div class="form-group">
+            <label>Enter the gas mileage of your car:</label>
+            <input type="text" name="mpg" value={{request.session.mpg}}><br>
+        </div>
+        <div class="form-group">
+            <label>How many minutes would you need to save to pay $5:</label>
+            <input type="text" name="cost" value={{request.session.cost}}><br>
+        </div>
+        <div class="form-group">
+            <label>Save Route?</label>
+            <input type="checkbox" name="save_route">
+            <input type="text" name="name" value="Route Name"><br>
+        </div>
+        <div class="form-group">
+        <input type="submit" value="Calculate Routes">
+    </form>
+    </div>
+</body>

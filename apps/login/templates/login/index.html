@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Welcome</title>
+          {% load staticfiles %}
+        <link rel="stylesheet" type = "text/css" href="{% static 'login/css/style.css' %}"> 
+    </head>
+    <body>
+        <header>
+            <h1>Welcome!</h1>
+        </header>
+        <form id="login" action="{% url 'auth:login' %}" method='POST'>
+            <h2>Login:</h2>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if "login" in message.tags %}
+                        <p>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+            Email: <input type = "text" name="email">
+            Password: <input type="password" name="password">
+            <input type="submit" value="Login"> 
+        </form>
+        <form id="register" action="{% url 'auth:register' %}" method='POST'>
+            <h2>Register:</h2>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if "register" in message.tags %}
+                        <p>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+            First Name: <input type="text" name="first">
+            Last Name: <input type = "text" name="last">
+            Email: <input type = "text" name="email">
+            MPG of your car:<input type="text" name="mpg">
+            How much time would you need to save to pay $5?<input type="text" name="cost">
+            Password: <input type="password" name="password">
+            Confirm Password: <input type="password" name="confirm">
+            <input type="submit" value="Register"> 
+        </form>
+    </body>
+    </body>
+</html>
